@@ -1,4 +1,5 @@
-It is published paper https://www.researchgate.net/profile/Sharjeel-Imtiaz/publication/318889918_A_Better_Comparison_Summary_of_Credit_Scoring_Classification/links/5992c769aca272ec90800688/A-Better-Comparison-Summary-of-Credit-Scoring-Classification.pdf with 29 citations
+**Credit Scoing of financial data**
+
 
 **Part 1**: is about preparing the data apply imputation, cleaning, preprocessing, using k-mean imputation and scaling methods.
 
@@ -38,4 +39,6 @@ After applying proper scaling and imputation:
 Neural networks caught up in performance but still lagged behind ensemble methods on smaller or noisy datasets.
 
 ✅ **Conclusion**
-Neural networks are suitable for datasets that are is not imputed then better when data avialiblity is high. Traditional models, especially tree-based ensembles, offer better out-of-the-box robustness and should be the go-to choice for initial modeling in real-world noisy datase
+Neural networks are suitable for datasets that are is not imputed then better when data avialiblity is high. Traditional models, especially tree-based ensembles, offer better out-of-the-box robustness and should be the go-to choice for initial modeling in real-world noisy database
+
+It is published paper https://www.researchgate.net/profile/Sharjeel-Imtiaz/publication/318889918_A_Better_Comparison_Summary_of_Credit_Scoring_Classification/links/5992c769aca272ec90800688/A-Better-Comparison-Summary-of-Credit-Scoring-Classification.pdf with 29 citations
