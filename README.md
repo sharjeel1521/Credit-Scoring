@@ -1,3 +1,5 @@
+It is published paper https://www.researchgate.net/profile/Sharjeel-Imtiaz/publication/318889918_A_Better_Comparison_Summary_of_Credit_Scoring_Classification/links/5992c769aca272ec90800688/A-Better-Comparison-Summary-of-Credit-Scoring-Classification.pdf with 29 citations
+
 **Part 1**: is about preparing the data apply imputation, cleaning, preprocessing, using k-mean imputation and scaling methods.
 
 **Part 2**: Core ML Methods – Scaling, Imputation, and Model Robustness
