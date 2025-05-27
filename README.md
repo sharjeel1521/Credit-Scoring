@@ -2,14 +2,14 @@ Part 1 is about preparing the data apply imputation, cleaning, preprocessing, us
 Part 2: Core ML Methods – Scaling, Imputation, and Model Robustness
 In this phase, we explored different core machine learning methods to assess their robustness in the presence of missing values and unscaled features. The goal was to understand how various models respond to imperfect or “unclean” data.
 
-⚙️ Key Experiments Conducted
+**⚙️ Key Experiments Conducted**
 Applied different imputation strategies (mean, median, KNN) to fill missing values.
 
 Tested feature scaling techniques (StandardScaler, MinMaxScaler, RobustScaler).
 
 Evaluated model performance with and without preprocessing on the following algorithms:
 
-Logistic Regression
+** Logistic Regression
 
 Random Forest
 
