@@ -2,27 +2,19 @@
 # Project:      Credit Scoring Analysis (petit example)
 # Description:  Part 1 - Data processing and cleaning
 # Data:         CreditScoring.csv
-# By:           Sharjeel Imtiaz
-# url:          www..com
+# By:           Gaston Sanchez
+# url:          www.gastonsanchez.com
 ##################################################################################
 
+# remember to change your working directory!!! (don't use mine)
+# setwd("/Users/gaston/Documents/Gaston/StatsDataMining")
 
-#-----Section 01-------------------------------------------
-# set working directory
-
-setwd(dirname(file.choose()))
-getwd()
-
-#-----Section 02-------------------------------------------
-# get data file creditcard.csv and put relevant variables in a data frame
-
-dd <- read.csv("creditcard.csv", stringsAsFactors = FALSE)
-
-
+# import data in file 'CreditScoring.csv'
+dd = read.csv("CreditScoring.csv", header=TRUE, stringsAsFactors=FALSE)
 
 # check table dimensions and description of variables
-dim(dd)	  # (30000, 25)
-str(dd)    #see the structure of the data
+dim(dd)	  # (4455, 14)
+str(dd)
 
 # see what the data looks like
 head(dd)
@@ -41,20 +33,17 @@ summary(dd)
 # ================================================================================
 
 # how many missing values (coded as 0)
-table(dd$PAY_0) #14737 zeros
-table(dd$PAY_2) #15730 zeros
-table(dd$PAY_3) # 15764 zeros
-table(dd$PAY_4) #16286 zeros
-table(dd$PAY_5) #16455 zeros
-table(dd$PAY_6) #16286 zeros
-
+table(dd$Status)
+table(dd$Home)
+table(dd$Marital)
+table(dd$Job)
 
 # we'll delete missing values since there are only a few of them
-good = dd$PAY_0 != 0 & dd$PAY_2 !=0 & dd$PAY_3 !=0 & dd$PAY_4 & dd$PAY_5 & dd$PAY_6 != 0
+good = dd$Status != 0 & dd$Home !=0 & dd$Marital !=0 & dd$Job != 0
 dd = dd[good, ]
 
 # check the new dimensions of the dataset
-dim(dd)   # (8827, 25)
+dim(dd)   # (4446, 14)
 
 
 # ================================================================================
@@ -62,36 +51,28 @@ dim(dd)   # (8827, 25)
 # ================================================================================
 
 # create single vectors for the following variables
-table(dd$BILL_AMT1)# 4 zeros
-table(dd$BILL_AMT2)# 4 zeros
-table(dd$BILL_AMT3) # 7 zeros
-table(dd$BILL_AMT4) # 4 zeros
-table(dd$BILL_AMT5) # 3 zeros
-table(dd$BILL_AMT6) # 2 zeros
+income = dd$Income
+assets = dd$Assets
+debt = dd$Debt
+seniority = dd$Seniority
 
-BILL_AMT1= dd$BILL_AMT1
-BILL_AMT2= dd$BILL_AMT2
-BILL_AMT3 = dd$BILL_AMT3
-BILL_AMT4 = dd$BILL_AMT4
-BILL_AMT5 = dd$BILL_AMT5
-BILL_AMT6 = dd$BILL_AMT6
-
-
+# how many missing values (coded as 99999999)
+sum(income == 99999999)    # 31
+sum(assets == 99999999)    # 41
+sum(debt == 99999999)      # 12
+sum(seniority == 99999999) # 0
 
 # how many zeros (this is just for curiosity)
-sum(BILL_AMT1 == 0)          # 346
-sum(BILL_AMT2 == 0)          # 1626
-sum(BILL_AMT3 == 0)            # 3667
-sum(BILL_AMT4 == 0)       # 532
-sum(BILL_AMT5 == 0) 
-sum(BILL_AMT6 == 0) 
+sum(income == 0)          # 346
+sum(assets == 0)          # 1626
+sum(debt == 0)            # 3667
+sum(seniority == 0)       # 532
+
 # codify missing values as NA
-BILL_AMT1[BILL_AMT1 == 0] <- NA
-BILL_AMT2[BILL_AMT2 == 0] <- NA
-BILL_AMT3[BILL_AMT3 == 0] <- NA
-BILL_AMT4[BILL_AMT4 == 0] <- NA
-BILL_AMT5[BILL_AMT5 == 0] <- NA
-BILL_AMT6[BILL_AMT6 == 0] <- NA
+income[income == 99999999 | income == 0] <- NA
+assets[assets == 99999999] <- NA
+debt[debt == 99999999] <- NA
+
 # since there are a lot of missing values in the continuous variables
 # we need to do some imputation
 # let's apply knn (k-nearest neighbor) imputation
@@ -102,59 +83,31 @@ library(class)
 # let's do 1nn imputation
 # (i.e. look for the most similar neighbor based on the remaining variables)
 
-# imputation with BILL_AMT1
-dd.aux = dd[,-13]
-aux.ok = dd.aux[!is.na(BILL_AMT1),]
-aux.na = dd.aux[is.na(BILL_AMT1),]
-knn.BILL_AMT1 = knn(aux.ok, aux.na, BILL_AMT1[!is.na(BILL_AMT1)])
-BILL_AMT1[is.na(BILL_AMT1)] = knn.BILL_AMT1
+# imputation with income
+dd.aux = dd[,-10]
+aux.ok = dd.aux[!is.na(income),]
+aux.na = dd.aux[is.na(income),]
+knn.income = knn(aux.ok, aux.na, income[!is.na(income)])
+income[is.na(income)] = knn.income
 
-# imputation with BILL_AMT2
-dd.aux = dd[,-14]
-aux.ok = dd.aux[!is.na(BILL_AMT2),]
-aux.na = dd.aux[is.na(BILL_AMT2),]
-knn.BILL_AMT2 = knn(aux.ok, aux.na, BILL_AMT2[!is.na(BILL_AMT2)])
-BILL_AMT2[is.na(BILL_AMT2)] = knn.BILL_AMT2
+# imputation with assets
+dd.aux = dd[,-11]
+aux.ok = dd.aux[!is.na(assets),]
+aux.na = dd.aux[is.na(assets),]
+knn.assets = knn(aux.ok, aux.na, assets[!is.na(assets)])
+assets[is.na(assets)] = knn.assets
 
-# imputation with BILL_AMT3
-dd.aux = dd[,-15]
-aux.ok = dd.aux[!is.na(BILL_AMT3),]
-aux.na = dd.aux[is.na(BILL_AMT3),]
-knn.BILL_AMT3 = knn(aux.ok, aux.na, BILL_AMT3[!is.na(BILL_AMT3)])
-BILL_AMT3[is.na(BILL_AMT3)] = knn.BILL_AMT3
-
-
-# imputation with BILL_AMT4
-dd.aux = dd[,-16]
-aux.ok = dd.aux[!is.na(BILL_AMT4),]
-aux.na = dd.aux[is.na(BILL_AMT4),]
-knn.BILL_AMT4 = knn(aux.ok, aux.na, BILL_AMT4[!is.na(BILL_AMT4)])
-BILL_AMT4[is.na(BILL_AMT4)] = knn.BILL_AMT4
-
-
-# imputation with BILL_AMT5
-dd.aux = dd[,-17]
-aux.ok = dd.aux[!is.na(BILL_AMT5),]
-aux.na = dd.aux[is.na(BILL_AMT5),]
-knn.BILL_AMT5 = knn(aux.ok, aux.na, BILL_AMT5[!is.na(BILL_AMT5)])
-BILL_AMT5[is.na(BILL_AMT5)] = knn.BILL_AMT5
-
-# imputation with BILL_AMT6
-dd.aux = dd[,-18]
-aux.ok = dd.aux[!is.na(BILL_AMT6),]
-aux.na = dd.aux[is.na(BILL_AMT6),]
-knn.BILL_AMT6 = knn(aux.ok, aux.na, BILL_AMT6[!is.na(BILL_AMT6)])
-BILL_AMT6[is.na(BILL_AMT6)] = knn.BILL_AMT6
-
+# imputation with debt
+dd.aux = dd[,-12]
+aux.ok = dd.aux[!is.na(debt),]
+aux.na = dd.aux[is.na(debt),]
+knn.debt = knn(aux.ok, aux.na, debt[!is.na(debt)])
+debt[is.na(debt)] = knn.debt
 
 # let's substitute the imputed variables
-dd$BILL_AMT1 = BILL_AMT1
-dd$BILL_AMT2 = BILL_AMT2
-dd$BILL_AMT3 = BILL_AMT3
-
-dd$BILL_AMT4 = BILL_AMT4
-dd$BILL_AMT5 = BILL_AMT5
-dd$BILL_AMT6 = BILL_AMT6
+dd$Income = income
+dd$Assets = assets
+dd$Debt = debt
 
 # let's check again the data
 # verify that there's no missing and/or weird values
@@ -169,38 +122,90 @@ summary(dd)
 # an ugly error message wihtout having no clue at all of what's wrong
 
 # specify categorical variables as factors
-
-dd$EDUCATION[dd$EDUCATION == 4] <- 0
-dd$EDUCATION[dd$EDUCATION == 5] <- 0
-dd$EDUCATION[dd$EDUCATION == 6] <- 0
-dd$SEX = as.factor(dd$SEX)
-dd$EDUCATION = as.factor(dd$EDUCATION)
-levels(dd$EDUCATION)
-
-dd$MARRIAGE[dd$MARRIAGE == 0] <- 3
-dd$MARRIAGE = as.factor(dd$MARRIAGE)
-levels(dd$MARRIAGE)
-
-dd$Y[dd$Y == 0] <- 'NO'
-dd$Y[dd$Y == 1] <- 'YES'
-
-dd$Y = as.factor(dd$Y)
-as.ordered(dd$Y)
-levels(dd$Y)
-
+dd$Status = as.factor(dd$Status)
+dd$Home = as.factor(dd$Home)
+dd$Marital = as.factor(dd$Marital)
+dd$Records = as.factor(dd$Records)
+dd$Job = as.factor(dd$Job)
 
 # change factor levels (i.e. categories)
-levels(dd$SEX) = c("male", "female")
-levels(dd$EDUCATION) = c("graduate", "university", "high school","others")
-levels(dd$MARRIAGE) = c("married","single","others")
+levels(dd$Status) = c("good", "bad")
+levels(dd$Home) = c("rent", "owner", "priv", "ignore", "parents", "other")
+levels(dd$Marital) = c("single", "married", "widow", "separated", "divorced")
+levels(dd$Records) = c("no_rec", "yes_rec")
+levels(dd$Job) = c("fixed", "partime", "freelance", "others")
 
 
+# ================================================================================
+# Define new variables 
+# ================================================================================
 
+# let's create two more variables:
+# 1) financing ratio
+# 2) savings capacity
+
+# add financing ratio
+dd$Finrat = 100 * dd$Amount / dd$Price
+
+# what's the distribution of financing ratio
+hist(dd$Finrat, col="gray85", main="Financing Ratio")
+
+# add savings capacity
+dd$Savings = (dd$Income - dd$Expenses - (dd$Debt/100)) / (dd$Amount / dd$Time)
+
+# what's the distribution of savings capacity
+hist(dd$Savings, col="gray85", main="Savings Capacity")
+
+
+# ================================================================================
+# Recoding (categorizing) continuous variables 
+# ================================================================================
+
+# The next stage involves recoding continuous variables into 
+# categorical values. This step assumes that you have 
+# previously explored the distributions of the continuous 
+# variables in order to determine appropriate cutoffs
+
+seniorityR = cut(dd$Seniority, breaks=c(-1,1,3,8,14,99))
+timeR = cut(dd$Time, breaks=c(0,12,24,36,48,99))
+ageR = cut(dd$Age, breaks=c(0,25,30,40,50,99))
+expensesR = cut(dd$Expenses, breaks=c(0,40,50,60,80,9999))
+incomeR = cut(dd$Income, breaks=c(0,80,110,140,190,9999))
+assetsR = cut(dd$Assets, breaks=c(-1,0,3000,5000,8000,999999))
+debtR = cut(dd$Debt, breaks=c(-1,0,500,1500,2500,999999))
+amountR = cut(dd$Amount, breaks=c(0,600,900,1100,1400,99999))
+priceR = cut(dd$Price, breaks=c(0,1000,1300,1500,1800,99999))
+finratR = cut(dd$Finrat, breaks=c(0,50,70,80,90,100))
+savingsR = cut(dd$Savings, breaks=c(-99,0,2,4,6,99))
+
+# let's label the categorized variables
+levels(seniorityR) = paste("sen", levels(seniorityR))
+levels(timeR) = paste("time", levels(timeR))
+levels(ageR) = paste("age", levels(ageR))
+levels(expensesR) = paste("exp", levels(expensesR))
+levels(incomeR) = paste("inc", levels(incomeR))
+levels(assetsR) = paste("asset", levels(assetsR))
+levels(debtR) = paste("debt", levels(debtR))
+levels(amountR) = paste("am", levels(amountR))
+levels(priceR) = paste("priz", levels(priceR))
+levels(finratR) = paste("finr", levels(finratR))
+levels(savingsR) = paste("sav", levels(savingsR))
+
+# add categorized variables to dataframe
+dd$seniorityR = seniorityR
+dd$timeR = timeR
+dd$ageR = ageR
+dd$expensesR = expensesR
+dd$incomeR = incomeR
+dd$assetsR = assetsR
+dd$debtR = debtR
+dd$amountR = amountR
+dd$priceR = priceR
+dd$finratR = finratR
+dd$savingsR = savingsR
 
 
 # Once we have preprocessed the data, we can save it in a new file
 # This is the file we'll be using in the next parts
-
-
 write.csv(dd, "CleanCreditScoring.csv", row.names=FALSE)
 
