@@ -1,5 +1,5 @@
-Part 1 is about preparing the data apply imputation, cleaning, preprocessing, using k-mean imputation and scaling methods
-Part 2: Core ML Methods – Scaling, Imputation, and Model Robustness
+**Part 1**: is about preparing the data apply imputation, cleaning, preprocessing, using k-mean imputation and scaling methods
+**Part 2**: Core ML Methods – Scaling, Imputation, and Model Robustness
 In this phase, we explored different core machine learning methods to assess their robustness in the presence of missing values and unscaled features. The goal was to understand how various models respond to imperfect or “unclean” data.
 
 **⚙️ Key Experiments Conducted**
@@ -9,17 +9,17 @@ Tested feature scaling techniques (StandardScaler, MinMaxScaler, RobustScaler).
 
 Evaluated model performance with and without preprocessing on the following algorithms:
 
-** Logistic Regression
+**Logistic Regression**
 
-Random Forest
+**Random Forest**
 
-XGBoost
+**XGBoost**
 
-K-Nearest Neighbors (KNN)
+**K-Nearest Neighbors (KNN)**
 
-Neural Networks (MLPClassifier)
+**Neural Networks (MLPClassifier)**
 
-🧪 Observations
+🧪 **Observations**
 Tree-based models (Random Forest, XGBoost) were more resilient to missing values and unscaled data.
 
 Linear models (Logistic Regression) improved significantly with scaling.
