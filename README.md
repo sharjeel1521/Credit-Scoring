@@ -64,7 +64,7 @@ subgraph Model_Training[Model Training & Evaluation]
         C2 --> M2[Random Forest]
         C2 --> M3[XGBoost]
         C2 --> M4[K-Nearest Neighbors]
-        C2 --> M5[Neural Network (MLP)]
+        C2 --> M5[Neural Network - MLP]
     end
 
     C2 --> C3[Model Evaluation]
@@ -82,5 +82,6 @@ subgraph Inference_Production[Production Pipeline]
 end
 
 E3 --> G[Final Loan Approval Decision]
+
 
 It is published paper https://www.researchgate.net/profile/Sharjeel-Imtiaz/publication/318889918_A_Better_Comparison_Summary_of_Credit_Scoring_Classification/links/5992c769aca272ec90800688/A-Better-Comparison-Summary-of-Credit-Scoring-Classification.pdf with 29 citations
