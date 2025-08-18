@@ -1,17 +1,45 @@
 **Credit Scoing of financial data**
 
 
-**Part 1**: is about preparing the data apply imputation, cleaning, preprocessing, using k-mean imputation and scaling methods.
+**Project Story – Credit Scoring System for Financial Data**
 
-**Part 2**: Core ML Methods – Scaling, Imputation, and Model Robustness
-In this phase, we explored different core machine learning methods to assess their robustness in the presence of missing values and unscaled features. The goal was to understand how various models respond to imperfect or “unclean” data.
+Financial institutions require robust credit scoring models to make timely, accurate lending decisions. Our team designed a scalable credit scoring pipeline that emphasizes data quality, model robustness, and operational reliability.
 
-**⚙️ Key Experiments Conducted**
-Applied different imputation strategies (mean, median, KNN) to fill missing values.
+**Part 1 – Data Preparation:**
+We ingested raw financial data containing missing values and heterogeneous feature scales. To ensure model readiness, we applied K-Means imputation, mean/median/KNN imputation, and feature scaling using StandardScaler, MinMaxScaler, and RobustScaler. This preprocessing step ensured consistent, high-quality inputs for downstream models.
 
-Tested feature scaling techniques (StandardScaler, MinMaxScaler, RobustScaler).
+**Part 2 – Core ML Methods & Robustness Testing:**
+To understand how different algorithms respond to imperfect data, we evaluated Logistic Regression, Random Forest, XGBoost, K-Nearest Neighbors, and Neural Networks (MLPClassifier) with and without preprocessing.
 
-Evaluated model performance with and without preprocessing on the following algorithms:
+**Key Experiments:**
+
+Assessed performance under different imputation strategies.
+
+Compared feature scaling methods to see impact on linear and non-linear models.
+
+Evaluated sensitivity of neural networks to uncleaned data versus ensemble methods.
+
+**Observations:**
+
+Tree-based models (Random Forest, XGBoost) were resilient to missing or unscaled features.
+
+Linear models (Logistic Regression) benefited significantly from scaling.
+
+Neural networks struggled on raw data but improved after proper preprocessing, though they still required larger, cleaner datasets to match ensemble performance.
+
+**Real-Time Production Deployment:**
+In production, new applicant data is streamed in via a Kafka pipeline, connected to a feature store for precomputed embeddings and scaling parameters. Models are served through MLflow Model Registry, with post-processing rules applied for business logic.
+
+**Monitoring & Feedback:**
+
+Logging captures predictions and model feedback.
+
+Drift monitoring identifies changes in input distributions.
+
+Canary deployments and shadow traffic testing validate new models without affecting real applicants.
+
+**Impact:**
+This approach allowed the bank to quickly and accurately assess credit risk, improving lending decisions while maintaining robustness to missing or noisy financial data. Ensemble methods became the primary production choice for small/noisy datasets, while neural networks were reserved for high-quality, larger datasets.
 
 **Logistic Regression**
 
