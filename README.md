@@ -84,4 +84,4 @@ end
 E3 --> G[Final Loan Approval Decision]
 
 
-It is published paper https://www.researchgate.net/profile/Sharjeel-Imtiaz/publication/318889918_A_Better_Comparison_Summary_of_Credit_Scoring_Classification/links/5992c769aca272ec90800688/A-Better-Comparison-Summary-of-Credit-Scoring-Classification.pdf with 29 citations
+
