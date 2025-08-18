@@ -41,15 +41,15 @@ Neural networks caught up in performance but still lagged behind ensemble method
 ✅ **Conclusion**
 Neural networks are suitable for datasets that are is not imputed then better when data avialiblity is high. Traditional models, especially tree-based ensembles, offer better out-of-the-box robustness and should be the go-to choice for initial modeling in real-world noisy database
 
-Training & Selection: Multiple algorithms evaluated, best model registered in MLflow.
+**Training & Selection:** Multiple algorithms evaluated, best model registered in MLflow.
 
-Inference: Model serves new loan applications and predicts credit scores.
+**Inference:** Model serves new loan applications and predicts credit scores.
 
-Post-Processing: Applies business rules before logging and decision.
+**Post-Processing:** Applies business rules before logging and decision.
 
-Monitoring & Feedback Loop: Drift and performance monitored, triggers retraining if needed.
+**Monitoring & Feedback Loop:** Drift and performance monitored, triggers retraining if needed.
 
-Decision Output: Feeds directly into the loan approval process.
+**Decision Output:** Feeds directly into the loan approval process.
 
 This diagram is presentation-ready and shows the entire end-to-end pipeline in one glance.
 
