@@ -1,5 +1,6 @@
 **Credit Scoing of financial data**
 
+**Contributed by Usman Haider for SVM code
 
 **Project Story – Credit Scoring System for Financial Data**
 
